@@ -2,9 +2,11 @@ import os
 import cv2
 import sys
 import argparse
-def split_image(image_path,hsegs=3,vsegs=3):
+def split_image(image_path,hsegs=3,vsegs=3,resize=False):
     # Load the image
     image = cv2.imread(image_path)
+    if(resize):
+        image = cv2.resize(image,(300,300))
     height, width, _ = image.shape
 
     # Compute the size of each segment
@@ -26,6 +28,7 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--clean',action='store_true')
     parser.add_argument('--ss',default=1,type=int)
+    parser.add_argument('--resize',action='store_true')
     args = parser.parse_args()
     if(args.clean):
         os.system('rm -rf segmented/*')
@@ -39,7 +42,7 @@ if __name__=='__main__':
             basename = fname.split('.')[0]
             segsavedir = f'{segmentedDir}/{cat}/{basename}'
             os.makedirs(segsavedir,exist_ok=True)
-            segs = split_image(f'{rootf}/{cat}/{fname}')
-            for i,seg in enumerate(segs):
+            segs = split_image(f'{rootf}/{cat}/{fname}',resize=args.resize)
+            for i,seg in enumerate(segs):                    
                 cv2.imwrite(f'{segsavedir}/seg{i}.jpg',seg)
     
