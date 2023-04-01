@@ -29,9 +29,10 @@ if __name__=='__main__':
     print(pos)
     indices = list(map(lambda p:int(p[0]+args.ns*p[1]),pos))
     print(indices)
-    orderedsegs =np.zeros((args.ns*args.ns))
+    orderedsegs = np.zeros((args.ns*args.ns,*shuffledsegmats[0].shape))
     for i in range(args.ns*args.ns):
-        orderedsegs[indices[i]] = np.pad((shuffledsegmats[i]),5,)
+        orderedsegs[indices[i]] = shuffledsegmats[i]
+    # print(orderedsegs)
     concatsave(orderedsegs,'combined.jpg',args.ns)
     concatsave(shuffledsegmats,'shuffled.jpg',args.ns)
     # for i in range(len(segmats)):
