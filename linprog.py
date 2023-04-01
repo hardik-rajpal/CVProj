@@ -9,7 +9,7 @@ THRES_REJ = 10e-5
 DX = [0, -1, 0, 1];DY = [1, 0, -1, 0]
 MGCROTINDS = [3, 0, 1, 2]
 MGCROTS_N = len(MGCROTINDS)
-MGC_DIST_MARGIN = 10
+MGC_DIST_MARGIN = 5
 CONSTR_ORIENT_PROD = MGCROTS_N*CONSTRAINTS
 class Solver:
     def computeWeights(self,pairwiseMatches, numImages):
