@@ -1,6 +1,6 @@
 import cv2,argparse,os,random
 import numpy as np
-from linprog import solve
+from linprog import Solver
 def shuffle(segmats):
     shuffled_segmats = segmats.copy()
     random.shuffle(shuffled_segmats)
@@ -23,7 +23,8 @@ if __name__=='__main__':
     segpaths = list(map(lambda x:f'{segmentspath}/{x}',segbasenames))
     segmats = list(map(lambda path:(cv2.imread(path)),segpaths))
     shuffledsegmats = shuffle(segmats)
-    x,y = solve(shuffledsegmats)
+    jigsawSolver = Solver()
+    x,y = jigsawSolver.solve(shuffledsegmats)
     # y = list(map(lambda yold:args.ns-1-yold,y))
     pos = list(zip(x,y))
     print(pos)
